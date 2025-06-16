@@ -11,14 +11,14 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "username")
+    @Column(name = "user_name")
     private String username;
 
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @Column(name = "pole_id")
-    private Long poleId;  //Тип может быть другим, если это внешний ключ к другой таблице
+    @Column(name = "roles_id")
+    private Long rolesId;
 
     public Long getUserId() {
         return userId;
@@ -44,11 +44,11 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public Long getPoleId() {
-        return poleId;
+    public Long getRolesId() {
+        return rolesId;
     }
 
-    public void setPoleId(Long poleId) {
-        this.poleId = poleId;
+    public void setRolesId(Long rolesId) {
+        this.rolesId = rolesId;
     }
 }
