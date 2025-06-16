@@ -3,39 +3,52 @@ package com.example.server.controller;
 import com.example.server.model.User;
 import com.example.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/users")
+@Controller
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/login")
+    public String login() {
+        return "login"; // Имя представления (login.html)
     }
 
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    @GetMapping("/users")
+    public String getAllUsers(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "users"; // Имя представления (users.html)
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String username, @RequestParam String password, Model model) {
+        User existingUser = userService.findByUsername(username);
+        if (existingUser != null) {
+            model.addAttribute("errorMessage", "Username already exists");
+            return "register"; // Return to registration page with error message
+        }
+
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPasswordHash(passwordEncoder.encode(password)); // Hash the password
+        userService.createUser(newUser);
+
+        return "redirect:/login"; // Redirect to login page after successful registration
     }
 
-    @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    @GetMapping("/register")
+    public String showRegistrationForm() {
+        return "register"; // Return the registration form view
     }
 }
