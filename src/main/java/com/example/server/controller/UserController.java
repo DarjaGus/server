@@ -21,14 +21,14 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
-        return "login"; // Имя представления (login.html)
+        return "login";
     }
 
     @GetMapping("/users")
     public String getAllUsers(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
-        return "users"; // Имя представления (users.html)
+        return "users";
     }
 
     @PostMapping("/register")
@@ -36,7 +36,7 @@ public class UserController {
         User existingUser = userService.findByUsername(username);
         if (existingUser != null) {
             model.addAttribute("errorMessage", "Username already exists");
-            return "register"; // Return to registration page with error message
+            return "register";
         }
 
         User newUser = new User();
@@ -44,11 +44,11 @@ public class UserController {
         newUser.setPasswordHash(passwordEncoder.encode(password)); // Hash the password
         userService.createUser(newUser);
 
-        return "redirect:/login"; // Redirect to login page after successful registration
+        return "redirect:/login";
     }
 
     @GetMapping("/register")
     public String showRegistrationForm() {
-        return "register"; // Return the registration form view
+        return "register";
     }
 }

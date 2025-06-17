@@ -21,14 +21,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Отключаем CSRF для простоты примера
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/login")).permitAll() // Разрешаем доступ к /login без аутентификации
-                        .anyRequest().authenticated() // Все остальные запросы требуют аутентификации
+                        .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // Указываем URL страницы логина
-                        .defaultSuccessUrl("/users", true) // Перенаправляем на /users после успешного входа
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/users", true)
                         .permitAll()
                 )
                 .logout(logout -> logout

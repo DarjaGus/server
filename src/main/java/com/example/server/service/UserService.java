@@ -28,7 +28,7 @@ public class UserService {
     public User updateUser(Long id, User user) {
         User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
-            user.setUserId(id); // Make sure the ID is set for updating
+            user.setUserId(id);
             return userRepository.save(user);
         }
         return null;
