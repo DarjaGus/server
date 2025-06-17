@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class UserService {
-
+/*
     @Autowired
     private UserRepository userRepository;
 
@@ -41,4 +41,6 @@ public class UserService {
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+ */
 }

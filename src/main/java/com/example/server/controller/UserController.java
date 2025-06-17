@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 public class UserController {
-
+/*
     @Autowired
     private UserService userService;
 
@@ -51,4 +51,6 @@ public class UserController {
     public String showRegistrationForm() {
         return "register";
     }
+
+ */
 }
